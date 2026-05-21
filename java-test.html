@@ -12,49 +12,52 @@
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #0a0a0a;
             min-height: 100vh;
             padding: 20px;
         }
         .container {
             max-width: 800px;
             margin: 0 auto;
-            background: white;
+            background: #1a1a2e;
             border-radius: 20px;
             padding: 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 60px rgba(0, 255, 100, 0.1);
+            border: 1px solid #00ff6644;
         }
         h1 {
             text-align: center;
-            color: #333;
+            color: #00ff66;
             margin-bottom: 10px;
             font-size: 28px;
+            text-shadow: 0 0 10px rgba(0, 255, 102, 0.3);
         }
         .subtitle {
             text-align: center;
-            color: #666;
+            color: #aaa;
             margin-bottom: 30px;
             font-size: 14px;
         }
         .question-card {
-            background: #f8f9fa;
+            background: #16213e;
             border-radius: 12px;
             padding: 20px;
             margin-bottom: 20px;
-            border-left: 4px solid #667eea;
+            border-left: 4px solid #00ff66;
             transition: all 0.3s;
         }
         .question-card:hover {
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0, 255, 102, 0.15);
+            background: #1a2744;
         }
         .question-text {
             font-weight: 600;
-            color: #333;
+            color: #ffffff;
             margin-bottom: 15px;
             font-size: 16px;
         }
         .question-number {
-            color: #667eea;
+            color: #00ff66;
             font-weight: 700;
         }
         .options {
@@ -67,39 +70,41 @@
             display: flex;
             align-items: center;
             padding: 10px 15px;
-            background: white;
+            background: #0f3460;
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.2s;
             border: 2px solid transparent;
+            color: #e0e0e0;
         }
         .options label:hover {
-            background: #e8ecff;
-            border-color: #667eea;
+            background: #1a4a1a;
+            border-color: #00ff66;
+            color: #ffffff;
         }
         .options input[type="radio"] {
             margin-right: 12px;
             width: 18px;
             height: 18px;
-            accent-color: #667eea;
+            accent-color: #00ff66;
         }
         .btn {
             display: block;
             width: 100%;
             padding: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: linear-gradient(135deg, #00ff66 0%, #00cc52 100%);
+            color: #000000;
             border: none;
             border-radius: 12px;
             font-size: 18px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
             margin-top: 20px;
         }
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 8px 25px rgba(0, 255, 102, 0.4);
         }
         .btn:active {
             transform: translateY(0);
@@ -112,19 +117,17 @@
         .result-score {
             font-size: 72px;
             font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #00ff66;
+            text-shadow: 0 0 20px rgba(0, 255, 102, 0.5);
         }
         .result-text {
             font-size: 20px;
-            color: #333;
+            color: #ffffff;
             margin: 10px 0;
         }
         .result-detail {
             font-size: 16px;
-            color: #666;
+            color: #aaa;
             margin-bottom: 20px;
         }
         .wrong-answers {
@@ -132,48 +135,49 @@
             margin-top: 20px;
         }
         .wrong-answers h3 {
-            color: #e74c3c;
+            color: #ff4444;
             margin-bottom: 15px;
             font-size: 20px;
         }
         .wrong-item {
-            background: #fff5f5;
-            border-left: 4px solid #e74c3c;
+            background: #2a1a1a;
+            border-left: 4px solid #ff4444;
             padding: 15px;
             margin-bottom: 12px;
             border-radius: 8px;
         }
         .wrong-item .q-text {
             font-weight: 600;
-            color: #333;
+            color: #ffffff;
             margin-bottom: 8px;
         }
         .wrong-item .your-answer {
-            color: #e74c3c;
+            color: #ff4444;
             margin-bottom: 4px;
         }
         .wrong-item .correct-answer {
-            color: #27ae60;
+            color: #00ff66;
             font-weight: 600;
         }
         .progress-bar {
             width: 100%;
             height: 6px;
-            background: #e0e0e0;
+            background: #333;
             border-radius: 3px;
             margin-bottom: 20px;
             overflow: hidden;
         }
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #667eea, #764ba2);
+            background: linear-gradient(90deg, #00ff66, #00cc52);
             border-radius: 3px;
             transition: width 0.3s;
+            box-shadow: 0 0 10px rgba(0, 255, 102, 0.5);
         }
         .timer {
             text-align: center;
             font-size: 14px;
-            color: #666;
+            color: #00ff66;
             margin-bottom: 15px;
         }
         .emoji-result {

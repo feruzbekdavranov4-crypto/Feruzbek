@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Test - O'zbek tilida</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #1a1a2e;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 255, 100, 0.1);
+            border: 1px solid #00ff6644;
+        }
+        h1 {
+            text-align: center;
+            color: #00ff66;
+            margin-bottom: 10px;
+            font-size: 28px;
+            text-shadow: 0 0 10px rgba(0, 255, 102, 0.3);
+        }
+        .subtitle {
+            text-align: center;
+            color: #aaa;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .question-card {
+            background: #16213e;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #00ff66;
+            transition: all 0.3s;
+        }
+        .question-card:hover {
+            box-shadow: 0 4px 15px rgba(0, 255, 102, 0.15);
+            background: #1a2744;
+        }
+        .question-text {
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        .question-number {
+            color: #00ff66;
+            font-weight: 700;
+        }
+        .options {
+            list-style: none;
+        }
+        .options li {
+            margin-bottom: 8px;
+        }
+        .options label {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            background: #0f3460;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+            color: #e0e0e0;
+        }
+        .options label:hover {
+            background: #1a4a1a;
+            border-color: #00ff66;
+            color: #ffffff;
+        }
+        .options input[type="radio"] {
+            margin-right: 12px;
+            width: 18px;
+            height: 18px;
+            accent-color: #00ff66;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #00ff66 0%, #00cc52 100%);
+            color: #000000;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 20px;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 255, 102, 0.4);
+        }
+        .btn:active {
+            transform: translateY(0);
+        }
+        .result-container {
+            display: none;
+            text-align: center;
+            padding: 30px;
+        }
+        .result-score {
+            font-size: 72px;
+            font-weight: 700;
+            color: #00ff66;
+            text-shadow: 0 0 20px rgba(0, 255, 102, 0.5);
+        }
+        .result-text {
+            font-size: 20px;
+            color: #ffffff;
+            margin: 10px 0;
+        }
+        .result-detail {
+            font-size: 16px;
+            color: #aaa;
+            margin-bottom: 20px;
+        }
+        .wrong-answers {
+            text-align: left;
+            margin-top: 20px;
+        }
+        .wrong-answers h3 {
+            color: #ff4444;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        .wrong-item {
+            background: #2a1a1a;
+            border-left: 4px solid #ff4444;
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+        }
+        .wrong-item .q-text {
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+        .wrong-item .your-answer {
+            color: #ff4444;
+            margin-bottom: 4px;
+        }
+        .wrong-item .correct-answer {
+            color: #00ff66;
+            font-weight: 600;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #333;
+            border-radius: 3px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff66, #00cc52);
+            border-radius: 3px;
+            transition: width 0.3s;
+            box-shadow: 0 0 10px rgba(0, 255, 102, 0.5);
+        }
+        .timer {
+            text-align: center;
+            font-size: 14px;
+            color: #00ff66;
+            margin-bottom: 15px;
+        }
+        .emoji-result {
+            font-size: 60px;
+            margin-bottom: 10px;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+                border-radius: 15px;
+            }
+            h1 {
+                font-size: 22px;
+            }
+            .question-text {
+                font-size: 14px;
+            }
+            .options label {
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Java Dasturlash Testi</h1>
+        <p class="subtitle">24 ta savol - O'zbek tilida | Offline ishlaydi</p>
+        <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width: 0%"></div></div>
+        <div class="timer" id="timer">Vaqt: 00:00</div>
+        
+        <form id="quizForm">
+            <div id="questionsContainer"></div>
+            <button type="button" class="btn" id="submitBtn" onclick="checkAnswers()">Natijani tekshirish</button>
+        </form>
+
+        <div class="result-container" id="resultContainer">
+            <div class="emoji-result" id="emojiResult"></div>
+            <div class="result-score" id="resultScore"></div>
+            <p class="result-text" id="resultText"></p>
+            <p class="result-detail" id="resultDetail"></p>
+            <div class="wrong-answers" id="wrongAnswers"></div>
+            <button class="btn" onclick="restartQuiz()" style="margin-top:20px;">Qayta boshlash</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                id: 1,
+                question: "JDBC driver nima?",
+                options: [
+                    "Operatsion tizim",
+                    "Java'ni ma'lumotlar bazasi bilan bog'lovchi komponent",
+                    "Kompilyator",
+                    "Grafik interfeys"
+                ],
+                correct: 1
+            },
+            {
+                id: 2,
+                question: "Spring Framework nima?",
+                options: [
+                    "Java ilovalarini ishlab chiqish uchun freymvork",
+                    "Operatsion tizim",
+                    "SQL ma'lumotlar bazasi",
+                    "Java kompilyatori"
+                ],
+                correct: 0
+            },
+            {
+                id: 3,
+                question: "NullPointerException nima?",
+                options: [
+                    "Null ob'yektga murojaat qilish xatosi",
+                    "GUI xatosi",
+                    "SQL xatosi",
+                    "Normal ishlash"
+                ],
+                correct: 0
+            },
+            {
+                id: 4,
+                question: "Deadlock nima?",
+                options: [
+                    "Oqimlarni tezlashtirish",
+                    "Kompilyatsiya xatosi",
+                    "GUI xatosi",
+                    "Oqimlarning o'zaro blokirovka holati"
+                ],
+                correct: 3
+            },
+            {
+                id: 5,
+                question: "reduce() nima?",
+                options: [
+                    "GUI metodi",
+                    "Oqim elementlarini birlashtirish (agregatsiya)",
+                    "Ma'lumotlarni o'chirish",
+                    "IDE funksiyasi"
+                ],
+                correct: 1
+            },
+            {
+                id: 6,
+                question: "Anonymous class nima?",
+                options: [
+                    "Tarmoq protokoli",
+                    "Loyiha fayli",
+                    "Nomsiz, joyida yaratilgan klass",
+                    "SQL jadvali"
+                ],
+                correct: 2
+            },
+            {
+                id: 7,
+                question: "TCP connection nima?",
+                options: [
+                    "Ma'lumotlar bazasi",
+                    "Lokal ulanish",
+                    "GUI aloqasi",
+                    "Ishonchli tarmoq ulanishi"
+                ],
+                correct: 3
+            },
+            {
+                id: 8,
+                question: "JTextField nima?",
+                options: [
+                    "Swing'da matn kiritish maydoni",
+                    "SQL so'rovi",
+                    "Kompilyator",
+                    "Internet moduli"
+                ],
+                correct: 0
+            },
+            {
+                id: 9,
+                question: "UDP nima?",
+                options: [
+                    "GUI moduli",
+                    "Tez, lekin ishonchsiz protokol",
+                    "Ishonchli protokol",
+                    "JVM moduli"
+                ],
+                correct: 1
+            },
+            {
+                id: 10,
+                question: "Java'da package nima?",
+                options: [
+                    "SQL so'rovlarini kompilyatsiya qilish vositasi",
+                    "Klasslarni guruhlash uchun paket",
+                    "Oqimlarni boshqarish tizimi",
+                    "Rasmlarni saqlash fayli"
+                ],
+                correct: 1
+            },
+            {
+                id: 11,
+                question: "collect() nima?",
+                options: [
+                    "JVM jarayoni",
+                    "SQL so'rovi",
+                    "Oqim natijalarini kolleksiyaga yig'ish",
+                    "Kolleksiyani o'chirish"
+                ],
+                correct: 2
+            },
+            {
+                id: 12,
+                question: "Maven nima?",
+                options: [
+                    "Java loyihalarini yig'ish vositasi",
+                    "Tarmoq drayveri",
+                    "Ma'lumotlar bazasi",
+                    "GUI kutubxonasi"
+                ],
+                correct: 0
+            },
+            {
+                id: 13,
+                question: "Java'da static nima?",
+                options: [
+                    "Klassni loyihadan o'chirish",
+                    "JVM xotirasida ob'yekt yaratish",
+                    "Faqat interfeyslar bilan ishlash",
+                    "O'zgaruvchi yoki metodning klassga tegishli ekanligini bildirish"
+                ],
+                correct: 3
+            },
+            {
+                id: 14,
+                question: "Functional interface nima?",
+                options: [
+                    "Bitta abstrakt metodga ega interfeys",
+                    "Ma'lumotlar bazasi interfeysi",
+                    "Metodsiz interfeys",
+                    "GUI interfeysi"
+                ],
+                correct: 0
+            },
+            {
+                id: 15,
+                question: "Metodlarni qayta yuklash (method overloading) nima?",
+                options: [
+                    "Bir xil nomli, lekin turli parametrli bir nechta metod yaratish",
+                    "Statik ma'lumotlar tuzilmasi",
+                    "Java loyihasidan ortiqcha klasslarni avtomatik o'chirish",
+                    "Dastur ishlash vaqtida ma'lumotlar bazasi tuzilmasini o'zgartirish"
+                ],
+                correct: 0
+            },
+            {
+                id: 16,
+                question: "Java'da String nima?",
+                options: [
+                    "Belgilarni saqlash uchun ma'lumotlar bazasi",
+                    "Faqat sonlarni saqlash uchun ma'lumot turi",
+                    "Java kodini kompilyatsiya qilish tizimi",
+                    "Matnli satrlar bilan ishlash uchun klass"
+                ],
+                correct: 3
+            },
+            {
+                id: 17,
+                question: "OutputStream nima?",
+                options: [
+                    "Ma'lumotlarni yozish oqimi",
+                    "Ma'lumotlar bazasi",
+                    "O'qish oqimi",
+                    "IDE moduli"
+                ],
+                correct: 0
+            },
+            {
+                id: 18,
+                question: "Java tilining asosiy afzalligi nima?",
+                options: [
+                    "Faqat doimiy internet ulanishi bilan ishlashi",
+                    "Faqat Linux serverlarida ishlatilishi",
+                    "Platformadan mustaqilligi (bir marta yoz, hamma joyda ishla)",
+                    "Faqat ma'lumotlar bazasi bilan ishlashi"
+                ],
+                correct: 2
+            },
+            {
+                id: 19,
+                question: "Class loader nima?",
+                options: [
+                    "SQL tizimi",
+                    "Grafik interfeys",
+                    "Internet moduli",
+                    "JVM komponenti bo'lib, klasslarni xotiraga yuklaydi"
+                ],
+                correct: 3
+            },
+            {
+                id: 20,
+                question: "Loose coupling nima?",
+                options: [
+                    "Klasslar orasidagi zaif bog'liqlik",
+                    "Interfeyslarni o'chirish",
+                    "Klasslarning qattiq bog'lanishi",
+                    "Faqat massivlar bilan ishlash"
+                ],
+                correct: 0
+            },
+            {
+                id: 21,
+                question: "Java'da object nima?",
+                options: [
+                    "Loyiha fayli",
+                    "Ma'lumotlar bazasi",
+                    "Kompilyator",
+                    "Klassning nusxasi (ekzemplyari)"
+                ],
+                correct: 3
+            },
+            {
+                id: 22,
+                question: "HashMap nima?",
+                options: [
+                    "Java kodini HTML'ga kompilyatsiya qilish metodi",
+                    "Ma'lumotlarni qo'shilish tartibida saqlaydigan ro'yxat",
+                    "Tez qidirish uchun 'kalit-qiymat' ma'lumotlar tuzilmasi",
+                    "Java Swing tugmalari uchun grafik komponent"
+                ],
+                correct: 2
+            },
+            {
+                id: 23,
+                question: "JVM bytecode nima?",
+                options: [
+                    "HTML kod",
+                    "SQL kod",
+                    "Java'ning manba kodi",
+                    "JVM tomonidan bajariladigan oraliq kod"
+                ],
+                correct: 3
+            },
+            {
+                id: 24,
+                question: "Jar file nima?",
+                options: [
+                    "Tarmoq paketi",
+                    "Java ilovasining arxivi",
+                    "Ma'lumotlar bazasi fayli",
+                    "GUI komponenti"
+                ],
+                correct: 1
+            }
+        ];
+
+        let startTime = Date.now();
+        let timerInterval;
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                const elapsed = Math.floor((Date.now() - startTime) / 1000);
+                const mins = String(Math.floor(elapsed / 60)).padStart(2, '0');
+                const secs = String(elapsed % 60).padStart(2, '0');
+                document.getElementById('timer').textContent = `Vaqt: ${mins}:${secs}`;
+            }, 1000);
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            let html = '';
+            questions.forEach((q, index) => {
+                html += `
+                    <div class="question-card" id="qcard-${q.id}">
+                        <p class="question-text"><span class="question-number">${q.id}.</span> ${q.question}</p>
+                        <ul class="options">
+                            ${q.options.map((opt, i) => `
+                                <li>
+                                    <label>
+                                        <input type="radio" name="q${q.id}" value="${i}">
+                                        ${opt}
+                                    </label>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function updateProgress() {
+            const total = questions.length;
+            let answered = 0;
+            questions.forEach(q => {
+                const selected = document.querySelector(`input[name="q${q.id}"]:checked`);
+                if (selected) answered++;
+            });
+            const percent = (answered / total) * 100;
+            document.getElementById('progressFill').style.width = percent + '%';
+        }
+
+        function checkAnswers() {
+            let correct = 0;
+            let wrong = [];
+            let unanswered = 0;
+
+            questions.forEach(q => {
+                const selected = document.querySelector(`input[name="q${q.id}"]:checked`);
+                if (!selected) {
+                    unanswered++;
+                    wrong.push({
+                        question: q.question,
+                        yourAnswer: "Javob berilmagan",
+                        correctAnswer: q.options[q.correct]
+                    });
+                } else if (parseInt(selected.value) === q.correct) {
+                    correct++;
+                } else {
+                    wrong.push({
+                        question: q.question,
+                        yourAnswer: q.options[parseInt(selected.value)],
+                        correctAnswer: q.options[q.correct]
+                    });
+                }
+            });
+
+            clearInterval(timerInterval);
+
+            const total = questions.length;
+            const percent = Math.round((correct / total) * 100);
+
+            let emoji = '';
+            let text = '';
+            if (percent >= 90) { emoji = '🏆'; text = 'Ajoyib natija!'; }
+            else if (percent >= 70) { emoji = '😊'; text = 'Yaxshi natija!'; }
+            else if (percent >= 50) { emoji = '😐'; text = "O'rtacha natija"; }
+            else { emoji = '😢'; text = "Ko'proq o'qish kerak"; }
+
+            document.getElementById('quizForm').style.display = 'none';
+            document.getElementById('timer').style.display = 'none';
+            const resultContainer = document.getElementById('resultContainer');
+            resultContainer.style.display = 'block';
+
+            document.getElementById('emojiResult').textContent = emoji;
+            document.getElementById('resultScore').textContent = percent + '%';
+            document.getElementById('resultText').textContent = text;
+            document.getElementById('resultDetail').textContent = 
+                `To'g'ri: ${correct} ta | Noto'g'ri: ${total - correct - unanswered} ta | Javobsiz: ${unanswered} ta | Jami: ${total} ta`;
+
+            if (wrong.length > 0) {
+                let wrongHtml = '<h3>❌ Noto\'g\'ri javoblar:</h3>';
+                wrong.forEach((w, i) => {
+                    wrongHtml += `
+                        <div class="wrong-item">
+                            <p class="q-text">${i + 1}. ${w.question}</p>
+                            <p class="your-answer">❌ Sizning javobingiz: ${w.yourAnswer}</p>
+                            <p class="correct-answer">✅ To'g'ri javob: ${w.correctAnswer}</p>
+                        </div>
+                    `;
+                });
+                document.getElementById('wrongAnswers').innerHTML = wrongHtml;
+            }
+        }
+
+        function restartQuiz() {
+            document.getElementById('quizForm').style.display = 'block';
+            document.getElementById('timer').style.display = 'block';
+            document.getElementById('resultContainer').style.display = 'none';
+            document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+            document.getElementById('progressFill').style.width = '0%';
+            startTime = Date.now();
+            startTimer();
+            window.scrollTo(0, 0);
+        }
+
+        // Initialize
+        renderQuestions();
+        startTimer();
+
+        // Track progress
+        document.addEventListener('change', (e) => {
+            if (e.target.type === 'radio') updateProgress();
+        });
+    </script>
+</body>
+</html>
